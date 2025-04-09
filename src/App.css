@@ -1,0 +1,141 @@
+/* Base Reset & Full-height Setup */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+/* Main App Container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+/* Header Area (assuming you have one) */
+.header {
+  width: 100%;
+  padding: 1rem;
+  background: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Content Area - Different for each page */
+.main-content {
+  flex: 1;
+  width: 100%;
+  padding: 2rem;
+  margin-top: 60px; /* Add space for fixed header */
+}
+
+/* Home Page Specific Styles */
+.home-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: calc(100vh - 150px); /* Adjust based on header/footer height */
+}
+
+.home-page h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.home-page p {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  color: #7f8c8d;
+  margin-bottom: 3rem;
+}
+
+/* Auth Pages (Login/Register) Container */
+.auth-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Products Page Grid */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+/* Footer */
+.app-footer {
+  background: #2c3e50;
+  color: white;
+  text-align: center;
+  padding: 1.5rem;
+  width: 100%;
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem;
+  }
+  
+  .auth-container {
+    padding: 1.5rem;
+    box-shadow: none;
+  }
+  
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Button Styles (Reusable) */
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin: 0.5rem;
+  text-align: center;
+}
+
+.btn-primary {
+  background: #2c3e50;
+  color: white;
+  border: 2px solid #2c3e50;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #2c3e50;
+  border: 2px solid #2c3e50;
+}
+
+/* Form Elements */
+.form-input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Update welcome container to use full width */
+.welcome-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}

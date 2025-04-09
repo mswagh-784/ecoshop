@@ -1,0 +1,289 @@
+/* Base styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-left, .nav-middle, .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1a73e8;
+}
+
+.logo a {
+  color: #1a73e8;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.logo a:hover {
+  color: #1557b0;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+nav a,
+nav span {
+  color: #3c4043;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: #1a73e8;
+}
+
+/* Underline effect for nav links */
+nav a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #1a73e8;
+  transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* Login/Register buttons */
+nav a[href="/login"],
+nav a[href="/register"] {
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+}
+
+nav a[href="/login"] {
+  border: 1.5px solid #1a73e8;
+  color: #1a73e8;
+}
+
+nav a[href="/login"]:hover {
+  background-color: rgba(26, 115, 232, 0.04);
+}
+
+nav a[href="/register"] {
+  background-color: #1a73e8;
+  color: white;
+  margin-left: 0.5rem;
+}
+
+nav a[href="/register"]:hover {
+  background-color: #1557b0;
+}
+
+/* Mobile menu button */
+header button {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: #3c4043;
+  padding: 0.5rem;
+}
+
+.cart-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  position: relative;
+}
+
+.cart-icon {
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ff4444;
+  color: white;
+  border-radius: 50%;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  min-width: 20px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logout-button {
+  background: #ff4444;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+  background: #c82333;
+}
+
+.mobile-nav {
+  display: none;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .nav-middle, .nav-right {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+
+  header button {
+    display: block;
+    order: 3;
+  }
+
+  nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 99;
+  }
+
+  nav.mobile-active {
+    display: flex;
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  nav a,
+  nav span {
+    width: 100%;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  nav a:last-child {
+    border-bottom: none;
+  }
+
+  nav a[href="/login"],
+  nav a[href="/register"] {
+    margin-top: 0.5rem;
+    display: block;
+    text-align: center;
+  }
+
+  .cart-button {
+    margin: 0.5rem 0;
+  }
+
+  .nav-right {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .logout-button {
+    width: 100%;
+    padding: 0.75rem;
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .mobile-nav a, 
+  .mobile-nav button {
+    padding: 0.75rem;
+    text-align: left;
+    width: 100%;
+  }
+
+  header {
+    padding: 0.5rem 1rem;
+    height: 60px; /* Reduced height for mobile */
+  }
+
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .cart-icon {
+    font-size: 1rem;
+  }
+
+  .cart-count {
+    width: 16px;
+    height: 16px;
+    font-size: 0.7rem;
+  }
+}
