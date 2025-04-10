@@ -62,4 +62,8 @@ export const api = {
     });
     return handleResponse(response);
   },
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 8b5fb99 (Merge remote changes)
