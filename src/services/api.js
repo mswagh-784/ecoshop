@@ -1,55 +1,65 @@
-const BASE_URL = 'http://localhost:5000/api';
+const BASE_URL = 'https://backend-ecoshop.onrender.com';
+
+const handleResponse = async (response) => {
+  const data = await response.json();
+  
+  if (!response.ok) {
+    throw new Error(data.message || `HTTP error! status: ${response.status}`);
+  }
+  
+  return data;
+};
 
 export const api = {
   // Auth endpoints
   register: async (userData) => {
-    try {
-      const response = await fetch(`${BASE_URL}/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData)
-      });
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || 'Registration failed');
-      }
-      
-      return data;
-    } catch (error) {
-      throw error;
-    }
+    const response = await fetch(`${BASE_URL}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData)
+    });
+    return handleResponse(response);
   },
 
-  login: (credentials) =>
-    fetch(`${BASE_URL}/auth/login`, {
+  login: async (credentials) => {
+    const response = await fetch(`${BASE_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials)
-    }).then(res => res.json()),
+    });
+    return handleResponse(response);
+  },
 
   // Products endpoints
-  getProducts: () => 
-    fetch(`${BASE_URL}/products`).then(res => res.json()),
+  getProducts: async () => {
+    const response = await fetch(`${BASE_URL}/products`);
+    return handleResponse(response);
+  },
 
-  getProduct: (id) =>
-    fetch(`${BASE_URL}/products/${id}`).then(res => res.json()),
+  getProduct: async (id) => {
+    const response = await fetch(`${BASE_URL}/products/${id}`);
+    return handleResponse(response);
+  },
 
   // Orders endpoints
-  createOrder: (orderData, token) =>
-    fetch(`${BASE_URL}/orders`, {
+  createOrder: async (orderData, token) => {
+    const response = await fetch(`${BASE_URL}/orders`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(orderData)
-    }).then(res => res.json()),
+    });
+    return handleResponse(response);
+  },
 
-  getOrders: (token) =>
-    fetch(`${BASE_URL}/orders`, {
+  getOrders: async (token) => {
+    const response = await fetch(`${BASE_URL}/orders`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
-    }).then(res => res.json()),
+    });
+    return handleResponse(response);
+  },
 };
