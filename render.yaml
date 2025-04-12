@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: ecoshop-frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run preview
+    envVars:
+      - key: VITE_API_URL
+        value: https://backend-ecoshop.onrender.com/api
+    staticPublishPath: ./dist

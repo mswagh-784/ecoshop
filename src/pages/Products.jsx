@@ -63,12 +63,10 @@ function Products() {
     }
   ];
 
-  // State for hero slider
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [products, setProducts] = useState([]);
 
-  // Auto-play slider
   useEffect(() => {
     let interval;
     if (isAutoPlaying) {
@@ -99,7 +97,6 @@ function Products() {
 
   return (
     <div className="products-page">
-      {/* Hero Slider Section */}
       <section className="hero-slider">
         <div className="slider-container" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
           {heroSlides.map((slide) => (
@@ -125,7 +122,6 @@ function Products() {
         </div>
       </section>
 
-      {/* Categories Section */}
       <section className="categories-section">
         <h2 className="section-title">Shop by Category</h2>
         <div className="categories-grid">
@@ -138,7 +134,6 @@ function Products() {
         </div>
       </section>
 
-      {/* Best Sellers Section */}
       <section className="best-sellers">
         <div className="section-header">
           <h2 className="section-title">Best Sellers</h2>

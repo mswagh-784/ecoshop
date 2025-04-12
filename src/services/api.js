@@ -1,69 +1,55 @@
-const BASE_URL = 'https://backend-ecoshop.onrender.com';
-
-const handleResponse = async (response) => {
-  const data = await response.json();
-  
-  if (!response.ok) {
-    throw new Error(data.message || `HTTP error! status: ${response.status}`);
-  }
-  
-  return data;
-};
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://backend-ecoshop.onrender.com/api';
 
 export const api = {
   // Auth endpoints
-  register: async (userData) => {
-    const response = await fetch(`${BASE_URL}/auth/register`, {
+  register: (userData) => 
+    fetch(`${BASE_URL}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData)
-    });
-    return handleResponse(response);
-  },
+    }).then(res => res.json()),
 
-  login: async (credentials) => {
-    const response = await fetch(`${BASE_URL}/auth/login`, {
+  login: (credentials) =>
+    fetch(`${BASE_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials)
-    });
-    return handleResponse(response);
-  },
+    }).then(res => res.json()),
 
   // Products endpoints
   getProducts: async () => {
-    const response = await fetch(`${BASE_URL}/products`);
-    return handleResponse(response);
+    try {
+      const response = await fetch(`${BASE_URL}/products`);
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.status}`);
+      }
+      return response.json();
+    } catch (error) {
+      console.error('Failed to fetch products:', error);
+      throw error;
+    }
   },
 
-  getProduct: async (id) => {
-    const response = await fetch(`${BASE_URL}/products/${id}`);
-    return handleResponse(response);
-  },
+  getProduct: (id) =>
+    fetch(`${BASE_URL}/products/${id}`).then(res => res.json()),
 
   // Orders endpoints
-  createOrder: async (orderData, token) => {
-    const response = await fetch(`${BASE_URL}/orders`, {
+  createOrder: (orderData, token) =>
+    fetch(`${BASE_URL}/orders`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(orderData)
-    });
-    return handleResponse(response);
-  },
+    }).then(res => res.json()),
 
-  getOrders: async (token) => {
-    const response = await fetch(`${BASE_URL}/orders`, {
+  getOrders: (token) =>
+    fetch(`${BASE_URL}/orders`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
-    });
-    return handleResponse(response);
-  },
-<<<<<<< HEAD
+    }).then(res => res.json())
 };
-=======
-};
->>>>>>> 8b5fb99 (Merge remote changes)
+
+export default api;
