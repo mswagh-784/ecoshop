@@ -1,20 +1,54 @@
-const BASE_URL = 'https://backend-ecoshop.onrender.com/api';
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://backend-ecoshop.onrender.com/api';
 
 export const api = {
   // Auth endpoints
-  register: (userData) => 
-    fetch(`${BASE_URL}/auth/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData)
-    }).then(res => res.json()),
+  register: async (userData) => {
+    try {
+      const response = await fetch(`${BASE_URL}/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(userData)
+      });
 
-  login: (credentials) =>
-    fetch(`${BASE_URL}/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credentials)
-    }).then(res => res.json()),
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Registration failed');
+      }
+
+      return response.json();
+    } catch (error) {
+      console.error('Registration error:', error);
+      throw error;
+    }
+  },
+
+  login: async (credentials) => {
+    try {
+      const response = await fetch(`${BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(credentials)
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Login failed');
+      }
+
+      return response.json();
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
+  },
 
   // Products endpoints
   getProducts: async () => {

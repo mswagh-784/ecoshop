@@ -24,26 +24,17 @@ function Registration() {
     e.preventDefault();
     setError('');
 
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-
     try {
-      const response = await api.register({
-        name: formData.name,
-        email: formData.email,
-        password: formData.password
-      });
-
+      const response = await api.register(formData);
       if (response.token) {
-        // Registration successful
+        alert('Registration successful! Please login.');
         navigate('/login');
       } else {
         setError(response.message || 'Registration failed');
       }
     } catch (err) {
-      setError('Registration failed. Please try again.');
+      setError(err.message || 'Registration failed. Please try again.');
+      console.error('Registration error:', err);
     }
   };
 

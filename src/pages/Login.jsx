@@ -22,10 +22,11 @@ function Login({ onLoginSuccess }) {
         onLoginSuccess();
         navigate('/products');
       } else {
-        setError('Invalid credentials');
+        setError(response.message || 'Invalid credentials');
       }
     } catch (err) {
-      setError('Login failed. Please try again.');
+      setError(err.message || 'Login failed. Please try again.');
+      console.error('Login error:', err);
     }
   };
 
