@@ -39,8 +39,7 @@ export const api = {
       });
 
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Login failed');
+        throw new Error('Login failed');
       }
 
       return response.json();
@@ -53,7 +52,9 @@ export const api = {
   // Products endpoints
   getProducts: async () => {
     try {
-      const response = await fetch(`${BASE_URL}/products`);
+      const response = await fetch(`${BASE_URL}/products`, {
+        credentials: 'include'
+      });
       if (!response.ok) {
         throw new Error(`API Error: ${response.status}`);
       }
@@ -65,7 +66,9 @@ export const api = {
   },
 
   getProduct: (id) =>
-    fetch(`${BASE_URL}/products/${id}`).then(res => res.json()),
+    fetch(`${BASE_URL}/products/${id}`, {
+      credentials: 'include'
+    }).then(res => res.json()),
 
   // Orders endpoints
   createOrder: (orderData, token) =>
@@ -75,6 +78,7 @@ export const api = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
+      credentials: 'include',
       body: JSON.stringify(orderData)
     }).then(res => res.json()),
 
@@ -82,7 +86,8 @@ export const api = {
     fetch(`${BASE_URL}/orders`, {
       headers: {
         'Authorization': `Bearer ${token}`
-      }
+      },
+      credentials: 'include'
     }).then(res => res.json())
 };
 

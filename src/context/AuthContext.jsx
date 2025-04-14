@@ -1,37 +1,43 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { api } from '../services/api';
+import { setCookie, getCookie, deleteCookie } from '../utils/cookies';
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
-  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const token = getCookie('auth_token');
+    const userData = getCookie('user_data');
+    if (token && userData) {
+      setUser(JSON.parse(userData));
+    }
+  }, []);
 
   const login = async (email, password) => {
-    setIsLoading(true);
     try {
-      const data = await api.login({ email, password });
-      if (data.token) {
-        localStorage.setItem('user', JSON.stringify(data));
-        setUser(data);
+      const response = await api.login({ email, password });
+      if (response.token) {
+        setCookie('auth_token', response.token);
+        setCookie('user_data', JSON.stringify(response));
+        setUser(response);
         return true;
       }
       return false;
     } catch (error) {
-      console.error('Login error:', error);
       return false;
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const logout = () => {
-    localStorage.removeItem('user');
+    deleteCookie('auth_token');
+    deleteCookie('user_data');
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
